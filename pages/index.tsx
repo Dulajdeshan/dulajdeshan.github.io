@@ -14,9 +14,6 @@ const fetcher = async ({ url, type }: any) => {
 
 export default function Home(): JSX.Element {
   const [selectedNavKey, setSelectedNavKey] = useState("ALL");
-
-  const { mutate } = useSWRConfig();
-
   const { data } = useSWR(
     {
       url: "/packages.json",
@@ -27,10 +24,10 @@ export default function Home(): JSX.Element {
 
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
-    mutate({
-      url: "/packages.json",
-      type: selectedNavKey,
-    });
+    // mutate({
+    //   url: "/packages.json",
+    //   type: selectedNavKey,
+    // });
   };
 
   return (

@@ -24,7 +24,7 @@ jobs:
           node-version: '16.x'
 
       # Install dependencies
-      - name: Install parent dependencies
+      - name: Install dependencies
         run: yarn install --prefer-offline
 
       # Build Application

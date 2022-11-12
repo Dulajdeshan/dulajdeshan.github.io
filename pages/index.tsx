@@ -17,7 +17,6 @@ export default function Home(): JSX.Element {
 
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
-    handleFilterValues(navItemKey);
   };
 
   const handleFilterValues = useCallback(

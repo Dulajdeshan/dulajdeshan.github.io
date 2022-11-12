@@ -2,15 +2,35 @@ import React, { useState } from "react";
 import { Box, UnderlineNav } from "@primer/react";
 import PackageCard from "../components/PackageCard/PackageCard";
 import { AppLayouts, HomeUnderlineNavItems } from "../utils/constants";
+import useSWR, { useSWRConfig } from "swr";
 
-interface HomeProps {
-  packages: any[];
-}
+const fetcher = async ({ url, type }: any) => {
+  let packages = await fetch(url).then((res) => res.json());
+  if (type !== "ALL") {
+    packages = packages.filter((packageItem: any) => packageItem.type === type);
+  }
+  return packages;
+};
 
-export default function Home({ packages }: HomeProps): JSX.Element {
+export default function Home(): JSX.Element {
   const [selectedNavKey, setSelectedNavKey] = useState("ALL");
+
+  const { mutate } = useSWRConfig();
+
+  const { data } = useSWR(
+    {
+      url: "/packages.json",
+      type: selectedNavKey,
+    },
+    fetcher
+  );
+
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
+    mutate({
+      url: "/packages.json",
+      type: selectedNavKey,
+    });
   };
 
   return (
@@ -36,7 +56,7 @@ export default function Home({ packages }: HomeProps): JSX.Element {
         gridGap={3}
         gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
       >
-        {packages?.map((item) => (
+        {data?.map((item: any) => (
           <PackageCard
             key={item.id}
             type={item.type}
@@ -50,15 +70,6 @@ export default function Home({ packages }: HomeProps): JSX.Element {
       </Box>
     </Box>
   );
-}
-
-export function getStaticProps() {
-  const packages = JSON.parse(process.env.NEXT_PUBLIC_PUBLIC_PACKAGES ?? "[]");
-  return {
-    props: {
-      packages,
-    },
-  };
 }
 
 Home.layout = AppLayouts.GENERAL_LAYOUT;

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "@fcodelabs/react-helper-hooks",
+    "name": "React Helper Hooks",
+    "type": "NPM",
+    "packageUrl": "https://www.npmjs.com/package/@fcodelabs/react-helper-hooks",
+    "githubUrl": "https://github.com/fcodelabs/react-helper-hooks",
+    "currentVersion": "v0.0.1",
+    "releasedDate": "2022-10-27",
+    "description": "A Custom Set of Helper Hooks written in Typescript to Make Your Life Easier."
+  },
+  {
+    "id": "@fcodelabs/react-deploy-github-pages-action",
+    "name": "React Deploy - Github Pages",
+    "type": "GITHUB_ACTION",
+    "packageUrl": "https://github.com/marketplace/actions/react-deploy-github-pages",
+    "githubUrl": "https://github.com/fcodelabs/react-helper-hooks",
+    "currentVersion": "v0.0.1",
+    "releasedDate": "2022-10-27",
+    "description": "GitHub Action to deploy React Apps to GitHub Pages"
+  }
+]

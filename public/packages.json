@@ -7,7 +7,8 @@
     "githubUrl": "https://github.com/fcodelabs/react-helper-hooks",
     "currentVersion": "v0.0.1",
     "releasedDate": "2022-10-27",
-    "description": "A Custom Set of Helper Hooks written in Typescript to Make Your Life Easier."
+    "description": "A Custom Set of Helper Hooks written in Typescript to Make Your Life Easier.",
+    "docUrl": "/docs/react-helper-hooks"
   },
   {
     "id": "@fcodelabs/react-deploy-github-pages-action",
@@ -17,6 +18,7 @@
     "githubUrl": "https://github.com/fcodelabs/react-helper-hooks",
     "currentVersion": "v0.0.1",
     "releasedDate": "2022-10-27",
-    "description": "GitHub Action to deploy React Apps to GitHub Pages"
+    "description": "GitHub Action to deploy React Apps to GitHub Pages",
+    "docUrl": "/docs/react-deploy-github-pages-action"
   }
 ]

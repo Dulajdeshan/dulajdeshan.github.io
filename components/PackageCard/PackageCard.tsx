@@ -1,12 +1,8 @@
 import React from "react";
 import { Box, Link, StyledOcticon, Text, Tooltip, Button } from "@primer/react";
-import NpmIcon from "../../assets/icons/npmIcon";
 import { PlayIcon } from "@primer/octicons-react";
-
-export enum IPackageType {
-  NPM = "NPM",
-  GITHUB_ACTION = "GITHUB_ACTION",
-}
+import NpmIcon from "../../assets/icons/npmIcon";
+import { IPackage, IPackageType } from "../../utils/interfaces";
 
 const PackageCardIcon = {
   [IPackageType.NPM]: NpmIcon,
@@ -18,14 +14,7 @@ const PackageCardTooltip = {
   [IPackageType.GITHUB_ACTION]: "Github Action",
 };
 
-interface IPackageCardProps {
-  type?: IPackageType;
-  packageUrl?: string;
-  name: string;
-  id: string;
-  githubUrl: string;
-  description: string;
-}
+interface IPackageCardProps extends IPackage {}
 
 export default function PackageCard({
   type,
@@ -34,6 +23,7 @@ export default function PackageCard({
   name,
   githubUrl,
   description,
+  docUrl,
 }: IPackageCardProps): JSX.Element {
   return (
     <Box
@@ -86,7 +76,7 @@ export default function PackageCard({
         borderBottomLeftRadius={10}
         borderBottomRightRadius={10}
       >
-        <Button variant="outline" as={Link} href="https://google.com">
+        <Button variant="outline" as={Link} href={docUrl ?? "#"}>
           Documentation
         </Button>
         <Button variant="outline" as={Link} href="#">

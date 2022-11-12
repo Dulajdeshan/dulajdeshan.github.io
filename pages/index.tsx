@@ -60,16 +60,8 @@ export default function Home(): JSX.Element {
         gridGap={3}
         gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
       >
-        {filteredPackages?.map((item: any) => (
-          <PackageCard
-            key={item.id}
-            type={item.type}
-            id={item.id}
-            name={item.name}
-            packageUrl={item.packageUrl}
-            githubUrl={item.githubUrl}
-            description={item.description}
-          />
+        {filteredPackages?.map((item) => (
+          <PackageCard key={item.id} {...item} />
         ))}
       </Box>
     </Box>

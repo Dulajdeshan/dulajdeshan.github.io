@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { IPackage } from "../../utils/interfaces";
 
 export const fetchPackagesAsync = createAsyncThunk("fetchPackagesAsync", () => {
   return fetch("/packages.json").then((res) => res.json());
 });
 
 export interface AppState {
-  packages: any[];
+  packages: IPackage[];
 }
 
 export const initialState: AppState = {

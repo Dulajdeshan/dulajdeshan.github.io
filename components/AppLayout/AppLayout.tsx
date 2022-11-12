@@ -1,11 +1,10 @@
 import React, { ReactNode } from "react";
+import { Box } from "@primer/react";
 import GeneralLayout from "./../GeneralLayout/GeneralLayout";
-import SingleLayout from "./../SingleLayout/SingleLayout";
 import { AppLayouts } from "../../utils/constants";
 
 const Layouts: any = {
   [AppLayouts.GENERAL_LAYOUT]: GeneralLayout,
-  [AppLayouts.SINGLE_LAYOUT]: SingleLayout,
 };
 
 interface AppLayoutProps {
@@ -18,7 +17,11 @@ function AppLayout({ layout, children }: AppLayoutProps) {
     const Layout = Layouts[layout] ?? GeneralLayout;
     return <Layout>{children}</Layout>;
   }
-  return <GeneralLayout>{children}</GeneralLayout>;
+  return (
+    <Box display="flex" width="100%" justifyContent="center">
+      {children}
+    </Box>
+  );
 }
 
 export default AppLayout;

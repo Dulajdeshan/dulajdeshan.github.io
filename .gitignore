@@ -39,3 +39,5 @@ next-env.d.ts
 # VisualStudioCode
 .vscode/*
 !.vscode/settings.json
+
+.env

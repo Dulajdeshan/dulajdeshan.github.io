@@ -3,10 +3,12 @@ import { Box, UnderlineNav } from "@primer/react";
 import PackageCard from "../components/PackageCard/PackageCard";
 import { AppLayouts, HomeUnderlineNavItems } from "../utils/constants";
 
-export default function Home(): JSX.Element {
-  const [selectedNavKey, setSelectedNavKey] = useState("ALL");
-  const packages: any[] = [];
+interface HomeProps {
+  packages: any[];
+}
 
+export default function Home({ packages }: HomeProps): JSX.Element {
+  const [selectedNavKey, setSelectedNavKey] = useState("ALL");
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
   };
@@ -48,6 +50,15 @@ export default function Home(): JSX.Element {
       </Box>
     </Box>
   );
+}
+
+export function getStaticProps() {
+  const packages = JSON.parse(process.env.NEXT_PUBLIC_PUBLIC_PACKAGES ?? "[]");
+  return {
+    props: {
+      packages,
+    },
+  };
 }
 
 Home.layout = AppLayouts.GENERAL_LAYOUT;

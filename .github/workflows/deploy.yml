@@ -23,18 +23,14 @@ jobs:
         with:
           node-version: '16.x'
 
-      # Install parent dependencies
-      - name: Install parent dependencies
-        run: yarn install --prefer-offline
-
       # Install dependencies
-      - name: Install dependencies
+      - name: Install parent dependencies
         run: yarn install --prefer-offline
 
       # Build Application
       - name: Build application
-        run: |
-          yarn export
+        run: yarn export
+          
       # Deploy to Github Pages
       - id: deploy
         name: Deploy to Github Pages

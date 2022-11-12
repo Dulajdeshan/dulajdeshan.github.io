@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, UnderlineNav } from "@primer/react";
 import { useDispatch } from "react-redux";
 import PackageCard from "../components/PackageCard/PackageCard";
@@ -13,9 +13,29 @@ export default function Home(): JSX.Element {
   } = useAppContext() as IAppContext;
   const [selectedNavKey, setSelectedNavKey] = useState("ALL");
 
+  const [filteredPackages, setFilteredPackages] = useState(packages);
+
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
+    handleFilterValues(navItemKey);
   };
+
+  const handleFilterValues = useCallback(
+    (key: string) => {
+      if (key !== "ALL") {
+        setFilteredPackages([
+          ...packages.filter((packageItem: any) => packageItem.type === key),
+        ]);
+      } else {
+        setFilteredPackages(packages);
+      }
+    },
+    [packages]
+  );
+
+  useEffect(() => {
+    handleFilterValues(selectedNavKey);
+  }, [selectedNavKey, handleFilterValues]);
 
   useEffect(() => {
     dispatch(fetchPackagesAsync());
@@ -44,7 +64,7 @@ export default function Home(): JSX.Element {
         gridGap={3}
         gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
       >
-        {packages?.map((item: any) => (
+        {filteredPackages?.map((item: any) => (
           <PackageCard
             key={item.id}
             type={item.type}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, UnderlineNav } from "@primer/react";
 import PackageCard from "../components/PackageCard/PackageCard";
 import { AppLayouts, HomeUnderlineNavItems } from "../utils/constants";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 
 const fetcher = async ({ url, type }: any) => {
   let packages = await fetch(url).then((res) => res.json());
@@ -24,10 +24,6 @@ export default function Home(): JSX.Element {
 
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
-    // mutate({
-    //   url: "/packages.json",
-    //   type: selectedNavKey,
-    // });
   };
 
   return (

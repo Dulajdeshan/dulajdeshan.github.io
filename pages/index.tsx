@@ -1,30 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, UnderlineNav } from "@primer/react";
+import { useDispatch } from "react-redux";
 import PackageCard from "../components/PackageCard/PackageCard";
 import { AppLayouts, HomeUnderlineNavItems } from "../utils/constants";
-import useSWR from "swr";
-
-const fetcher = async ({ url, type }: any) => {
-  let packages = await fetch(url).then((res) => res.json());
-  if (type !== "ALL") {
-    packages = packages.filter((packageItem: any) => packageItem.type === type);
-  }
-  return packages;
-};
+import { appActions, fetchPackagesAsync } from "../redux/app/slice";
+import { useAppContext, IAppContext } from "../redux/AppContext";
 
 export default function Home(): JSX.Element {
+  const {
+    state: { packages },
+    dispatch,
+  } = useAppContext() as IAppContext;
   const [selectedNavKey, setSelectedNavKey] = useState("ALL");
-  const { data } = useSWR(
-    {
-      url: "/packages.json",
-      type: selectedNavKey,
-    },
-    fetcher
-  );
 
   const handleSelectUnderlineNavItem = (navItemKey: string): void => {
     setSelectedNavKey(navItemKey);
   };
+
+  useEffect(() => {
+    dispatch(fetchPackagesAsync());
+  }, [selectedNavKey, dispatch]);
 
   return (
     <Box>
@@ -49,7 +44,7 @@ export default function Home(): JSX.Element {
         gridGap={3}
         gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
       >
-        {data?.map((item: any) => (
+        {packages?.map((item: any) => (
           <PackageCard
             key={item.id}
             type={item.type}

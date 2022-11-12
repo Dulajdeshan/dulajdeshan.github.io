@@ -7,12 +7,13 @@ import {
   BaseStyles,
   Box,
   PageLayout,
-  SSRProvider,
 } from "@primer/react";
 import deepmerge from "deepmerge";
 import { AppLayouts } from "../utils/constants";
 import AppLayout from "../components/AppLayout/AppLayout";
 import PageHeader from "../components/PageHeader/PageHeader";
+import { useState } from "react";
+import { AppWrapper } from "../redux/AppContext";
 
 const customTheme = deepmerge(theme, {
   fonts: {
@@ -30,7 +31,7 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
-    <SSRProvider>
+    <AppWrapper>
       <ThemeProvider theme={customTheme} colorMode="night">
         <BaseStyles>
           <Box minHeight="100vh" bg="canvas.default">
@@ -53,6 +54,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           </Box>
         </BaseStyles>
       </ThemeProvider>
-    </SSRProvider>
+    </AppWrapper>
   );
 }

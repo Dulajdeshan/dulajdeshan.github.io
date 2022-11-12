@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   PageLayout,
@@ -7,18 +7,25 @@ import {
   Avatar,
   Autocomplete,
 } from "@primer/react";
+import { useAppContext, IAppContext } from "../../redux/AppContext";
 
 export default function PageHeader(): JSX.Element {
+  const {
+    state: { packages },
+  } = useAppContext() as IAppContext;
   const [filterVal, setFilterVal] = React.useState("");
   const [searchInputWidth, setSearchInputWidth] = React.useState<
     number | undefined
   >(undefined);
-  const packages: any = [];
+
+  const [currentPackages, setCurrentPackages] = useState<any>([]);
+
   const handleChange = (event: any): void => {
     setFilterVal(event.currentTarget.value);
   };
   const customFilterFn = (item: any): boolean =>
-    item.text.toLowerCase().includes(filterVal.toLowerCase());
+    item.text.toLowerCase().includes(filterVal.toLowerCase()) ||
+    item.id === "search-text";
 
   const handleOnSelectedChange = (selectedItem: any): void => {
     console.log(selectedItem);
@@ -27,6 +34,43 @@ export default function PageHeader(): JSX.Element {
   const handleOnOpenChange = (open: boolean): void => {
     setSearchInputWidth(open ? 300 : undefined);
   };
+
+  useEffect(() => {
+    setCurrentPackages(
+      packages.map((item) => ({ name: item.name, id: item.id }))
+    );
+  }, [packages]);
+
+  useEffect(() => {
+    if (filterVal.length > 0) {
+      setCurrentPackages((prevState: any[]) => {
+        if (prevState.length === 0) {
+          prevState.splice(0, 0, {
+            name: `Search for ${filterVal}`,
+            id: "search-text",
+          });
+        } else {
+          if (prevState[0] && prevState[0].id === "search-text") {
+            prevState[0].name = `Search for ${filterVal}`;
+          } else {
+            prevState.splice(0, 0, {
+              name: `Search for ${filterVal}`,
+              id: "search-text",
+            });
+          }
+        }
+        return [...prevState];
+      });
+    } else {
+      setCurrentPackages((prevState: any[]) => {
+        if (prevState[0] && prevState[0].id === "search-text") {
+          prevState.splice(0, 1);
+        }
+        return [...prevState];
+      });
+    }
+  }, [filterVal]);
+
   return (
     <PageLayout.Header divider="line" padding="none">
       <Header
@@ -73,15 +117,17 @@ export default function PageHeader(): JSX.Element {
                 }}
               >
                 <Autocomplete.Menu
-                  items={packages.map((packageItem: any) => ({
+                  items={currentPackages.map((packageItem: any) => ({
+                    key: packageItem.id,
                     text: packageItem.name,
                     id: packageItem.id,
                   }))}
                   selectedItemIds={[]}
-                  aria-labelledby="autocompleteLabel-basic"
+                  aria-labelledby="search-box"
                   filterFn={customFilterFn}
                   onSelectedChange={handleOnSelectedChange}
                   onOpenChange={handleOnOpenChange}
+                  emptyStateText=""
                 />
               </Autocomplete.Overlay>
             </Autocomplete>

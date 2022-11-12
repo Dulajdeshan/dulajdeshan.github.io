@@ -66,7 +66,7 @@ export default function PackageCard({
           {type && PackageCardIcon[type] ? (
             <Tooltip aria-label={PackageCardTooltip[type] || ""}>
               <Link href={packageUrl ?? "#"} target="_blank">
-                <StyledOcticon icon={PackageCardIcon[type]} size={32} />
+                <StyledOcticon icon={PackageCardIcon[type]} size={24} />
               </Link>
             </Tooltip>
           ) : null}
